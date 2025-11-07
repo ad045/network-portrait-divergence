@@ -295,8 +295,13 @@ Columns are delimited with whitespace by default.
         if args.weighted:
             data = [(args.weighted, float)]
         
-        G = nx.read_edgelist(args.filename1, create_using=create_using(), data=data)
-        H = nx.read_edgelist(args.filename2, create_using=create_using(), data=data)
+        network_1 = np.load(args.filename1)[0,:,:]
+        network_2 = np.load(args.filename2)[0,:,:]
+        G = nx.from_numpy_array(network_1, create_using=create_using()) # , data=data)
+        H = nx.from_numpy_array(network_2, create_using=create_using()) # , data=data)
+        
+        # G = nx.read_edgelist(args.filename1, create_using=create_using(), data=data)
+        # H = nx.read_edgelist(args.filename2, create_using=create_using(), data=data)
         
     if args.weighted is False:
         Djs = portrait_divergence(G, H)
